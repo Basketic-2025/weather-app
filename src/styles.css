@@ -1,0 +1,103 @@
+﻿@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light dark;
+}
+
+body {
+  font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, 'Apple Color Emoji', 'Segoe UI Emoji';
+  @apply bg-slate-100 text-slate-900 transition-colors duration-300 ease-out dark:bg-slate-900 dark:text-slate-100;
+}
+
+.card {
+  @apply rounded-2xl bg-white/80 p-6 shadow dark:bg-slate-800/80 border border-slate-200/60 dark:border-slate-700/60 transition duration-200 ease-out hover:shadow-md;
+  contain: paint;
+}
+
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  @apply bg-slate-200 dark:bg-slate-700 rounded-xl;
+}
+
+.skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.45), transparent);
+  animation: skeleton-shimmer 1.2s infinite;
+}
+
+@keyframes skeleton-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+  .skeleton::after {
+    animation: none !important;
+  }
+}
+
+/* Large content performance helpers */
+@supports (content-visibility: auto) {
+  .cv-auto {
+    content-visibility: auto;
+  }
+}
+.cis-chart {
+  contain-intrinsic-size: 256px 400px;
+}
+.cis-grid {
+  contain-intrinsic-size: 480px 800px;
+}
+
+/* Design system utilities */
+.glass {
+  @apply bg-white/60 dark:bg-slate-800/50 border border-white/30 dark:border-white/10 shadow-sm;
+}
+
+@supports ((-webkit-backdrop-filter: blur(0.5rem)) or (backdrop-filter: blur(0.5rem))) {
+  /* Apply blur only on medium screens and up to avoid mobile jank */
+  @media (min-width: 1280px) {
+    .glass {
+      -webkit-backdrop-filter: saturate(1.2) blur(8px);
+      backdrop-filter: saturate(1.2) blur(8px);
+    }
+  }
+}
+
+/* Performance mode overrides */
+.perf .glass {
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+.perf .card {
+  box-shadow: none !important;
+  border-color: rgba(148, 163, 184, 0.3) !important; /* slate-400/30 */
+}
+.perf .skeleton::after {
+  display: none !important;
+}
+
+.btn {
+  @apply inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-semibold transition focus:outline-none focus-visible:ring;
+}
+.btn-primary {
+  @apply btn bg-primary-600 text-white hover:bg-primary-700 focus-visible:ring-primary-400 dark:bg-primary-500 dark:hover:bg-primary-400;
+}
+.btn-ghost {
+  @apply btn border border-slate-300 hover:bg-slate-200 dark:border-slate-700 dark:hover:bg-slate-800;
+}
+.chip {
+  @apply inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1 text-xs text-slate-700 dark:bg-slate-800 dark:text-slate-200;
+}
